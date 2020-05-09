@@ -167,7 +167,7 @@ import './index.css';
 
 
 
-/***  Introduction to State in React Components  ***/
+/***  Introduction to State in React Components  Lesson 6***/
 
 // class Employee extends React.Component{
 // 	state = {counter : 0};
@@ -223,7 +223,7 @@ import './index.css';
 
 
 
-/***  Interaction between Components  ***/
+/***  Interaction between Components  Lesson 7***/
 
 // class Employee extends React.Component{
 // 	constructor(props){
@@ -346,3 +346,228 @@ import './index.css';
 // ReactDOM.render(element,  document.getElementById("root"));
 
 
+
+/****  React Component communication using context  Lesson 8****/
+// const employeeContext = React.createContext();
+
+// class App extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 		this.state = {
+// 			Id: 101,
+// 			Name: "Nicolae",
+// 			Location: "Chicago",
+// 			Salary: 1234
+// 		};
+// 	}
+// 	changeEmployeeData = () => {
+// 		this.setState({Id:202});
+// 	}
+// 	render(){
+// 		return <div>
+// 			<h2>Welcome to App Component</h2>
+// 			<p>
+// 				<label>Employee Id: <b>{this.state.Id}</b></label>
+// 			</p>
+// 			<p>
+// 				<employeeContext.Provider value={this.state}>
+// 					<Employee></Employee>
+// 				</employeeContext.Provider>
+// 			</p>
+// 			<button onClick={this.changeEmployeeData}>Update</button>
+// 		</div>
+// 	}
+// }
+
+// class Employee extends React.Component{
+// 	static contextType = employeeContext;
+// 	render(){
+// 		return <div>
+// 			<h2>Welcome to Employee Component...</h2>
+// 			<p>
+// 			<label>Employee ID: <b>{this.context.Name}</b></label>
+// 			</p>
+// 			<Salary></Salary>
+// 		</div>
+// 	}
+// }
+
+// class Salary extends React.Component{
+// 	static contextType = employeeContext;
+// 	render(){
+// 		return <div>
+// 			<h2>Welcome to Salary Component...</h2>
+// 			<p>
+// 				<label>Employee Salary: <b>{this.context.Salary}</b></label>
+// 			</p>
+// 		</div>
+// 	}
+// }
+
+// const element = <App></App>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+/****  Interaction between React Components   Lesson 9****/ 
+
+/** Transfering data from child component to parent component **/
+// const employeeContext = React.createContext({
+// 	data:"",
+// 	changeEmployeeInfo:()=>{}
+// });
+
+// class App extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 		this.state = {
+// 			data: {
+// 				Id: 101,
+// 				Name: "Nicolae",
+// 				Location: "Chicago",
+// 				Salary: 1234
+// 			},
+// 			changeEmployeeInfo: this.updateEmployeeDetails
+// 		};
+// 	}
+// 	updateEmployeeDetails = () => {
+// 		this.setState({data:{Id:202}});
+// 	}
+// 	render(){
+// 		return <div>
+// 			<h2>Welcome to App Component</h2>
+// 			<p>
+// 				<label>Employee Id: <b>{this.state.data.Id}</b></label>
+// 			</p>
+// 			<p>
+// 				<employeeContext.Provider value={this.state}>
+// 					<Employee></Employee>
+// 				</employeeContext.Provider>
+// 			</p>
+// 		</div>
+// 	}
+// }
+
+// class Employee extends React.Component{
+// 	static contextType = employeeContext;
+// 	render(){
+// 		return <div>
+// 			<h2>Welcome to Employee Component...</h2>
+// 			<p>
+// 			<label>Employee ID: <b>{this.context.data.Name}</b></label>
+// 			</p>
+// 			<button onClick={this.context.changeEmployeeInfo}>Update</button>
+// 			<Salary></Salary>
+// 		</div>
+// 	}
+// }
+
+// class Salary extends React.Component{
+// 	static contextType = employeeContext;
+// 	render(){
+// 		return <div>
+// 			<h2>Welcome to Salary Component...</h2>
+// 			<p>
+// 				<label>Employee Salary: <b>{this.context.data.Salary}</b></label>
+// 			</p>
+// 		</div>
+// 	}
+// }
+
+// const element = <App></App>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+/*****  Iterating through lists in react   Lesson 10*****/
+// function Employee(props){
+// 	return <div style={{border:"3px solid red"}}>
+// 		<p>
+// 			<label>Employee Id: <b>{props.data.Id}</b></label>
+// 		</p>
+// 		<p>
+// 			<label>Employee Name: <b>{props.data.Name}</b></label>
+// 		</p>
+// 		<p>
+// 			<label>Employee Location: <b>{props.data.Location}</b></label>
+// 		</p>
+// 		<p>
+// 			<label>Employee Salary: <b>{props.data.Salary}</b></label>
+// 		</p>
+// 	</div>
+// }
+
+// function DisplayEmployees(props){
+// 	const empList = props.employeeList;
+
+// 	const listElements = empList.map( (emp) => {
+// 		return <Employee key={emp.Id} data={emp}></Employee>
+// 	});
+
+// 	return (
+// 		<div>
+// 			{listElements}
+// 		</div>
+// 	)
+// }
+
+// const employees = [
+// 	{Id:101, Name:"Dumitru", Location:"Chicago", Salary:123},
+// 	{Id:102, Name:"Dorina", Location:"Chisinau", Salary:123},
+// 	{Id:103, Name:"Nicolae", Location:"Chicago", Salary:123}
+// ];
+
+// const element = <DisplayEmployees employeeList={employees}></DisplayEmployees>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+
+/****  How to call REST API from React   Lesson 11 ****/
+// class EmployeeComponent extends React.Component{
+// 	constructor(props){
+// 		super(props);
+
+// 		this.state = {
+// 			employees:[]
+// 		};
+// 	}
+
+// 	componentDidMount(){
+// 		fetch("http://127.0.0.1:5000/").then(res=>res.json()).then(result=>this.setState({employees:result}))
+// 	}
+
+// 	render(){
+// 		return <div>
+// 			<h2>Employee Details...</h2>
+// 			<table>
+// 				<thead>
+// 					<tr>
+// 						<th>ID</th>
+// 						<th>Name</th>
+// 						<th>Location</th>
+// 						<th>Salary</th>
+// 					</tr>
+// 				</thead>
+// 				<tbody>
+// 					{this.state.employees.map((emp) => {
+// 						return (<tr key={emp.Id}>
+// 							<td>{emp.Id}</td>
+// 							<td>{emp.Name}</td>
+// 							<td>{emp.Location}</td>
+// 							<td>{emp.Salary}</td>
+// 						</tr>)
+// 					})}
+// 				</tbody>
+// 			</table>
+// 		</div>
+// 	}
+// }
+
+// const element = <EmployeeComponent></EmployeeComponent>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+
+/****  How to Send POST Request from React Application to REST API  Lesson 12 ****/
