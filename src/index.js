@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import {useFormik, Formik, ErrorMessage, Field, Form} from 'formik';
+import * as yup from 'yup';
+import video from "../src/assets/Abigail.MOV";
+
 
 /*** Creating an element in React ***/
 
@@ -571,3 +575,824 @@ import './index.css';
 
 
 /****  How to Send POST Request from React Application to REST API  Lesson 12 ****/
+// class EmployeeComponent extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 		this.state = {
+// 			message:""
+// 		};
+// 	}
+
+// 	onCreateEmployee = () => {
+// 		let empInfo = {
+// 			Id: this.refs.Id.value,
+// 			Name: this.refs.Name.value,
+// 			Location: this.refs.Location.value,
+// 			Salary: this.refs.Salary.value
+// 		};
+// 		console.log(JSON.stringify(empInfo));
+
+// 		fetch("http://localhost:5000/api/user", { 
+// 			method: "POST",
+// 			headers: {'Content-Type': 'application/json;charset=UTF-8'},
+// 			body: JSON.stringify(empInfo)
+// 		}).then(r=>r.json()).then(res=>{
+// 			if(res){
+// 				this.setState({message:"New employee created succesfulley"});
+// 			}
+// 		});
+// 	}
+
+// 	render(){
+// 		return <div>
+// 			<h2>Please Enter Employee Details...</h2>
+// 			<p>
+// 				<label>Employee Id: <input type="text" ref="Id"></input></label>
+// 			</p>
+// 			<p>
+// 				<label>Employee Name: <input type="text" ref="Name"></input></label>
+// 			</p>
+// 			<p>
+// 				<label>Employee Location: <input type="text" ref="Location"></input></label>
+// 			</p>
+// 			<p>
+// 				<label>Employee Salary: <input type="text" ref="Salary"></input></label>
+// 			</p>
+// 				<button onClick={this.onCreateEmployee}>Create</button>
+// 			<p>{this.state.message}</p>
+// 		</div>
+// 	}
+// }
+
+// const element = <EmployeeComponent></EmployeeComponent>;
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+/****  How to build forms in react   Lesson 13 ****/
+// class EmployeeComponent extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 		this.state = {
+// 			employee :{
+// 				Id: "",
+// 				Name: "",
+// 				Location: "",
+// 				Salary: "",
+// 			}
+// 		};
+// 	}
+
+// 	changeHandler = (e) => {
+// 		const name = e.target.name;
+// 		const value = e.target.value;
+// 		this.setState({employee:{
+// 			...this.state.employee,
+// 			[name]:value
+// 		}});
+// 	}
+
+// 	onCreateEmployee = () =>{
+// 		console.log(this.state.employee);
+// 	}
+
+// 	render(){
+// 		return <div>
+// 			<h2>New Employee Form...</h2>
+// 			<form>
+// 				<p>
+// 					<label>Employee Id: <input type="text" name="Id" value={this.state.employee.Id} onChange={this.changeHandler}></input></label>
+// 				</p>
+// 				<p>
+// 					<label>Employee Name: <input type="text" name="Name" value={this.state.employee.Name} onChange={this.changeHandler}></input></label>
+// 				</p>
+// 				<p>
+// 					<label>Employee Location: <input type="text" name="Location" value={this.state.employee.Location} onChange={this.changeHandler}></input></label>
+// 				</p>
+// 				<p>
+// 					<label>Employee Salary: <input type="text" name="Salary" value={this.state.employee.Salary} onChange={this.changeHandler}></input></label>
+// 				</p>
+// 			</form>
+// 			<button onClick={this.onCreateEmployee}>Create</button>
+// 		</div>
+// 	}
+// }
+
+// const element = <EmployeeComponent></EmployeeComponent>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+/****  CONTINUE LESSON 13 using Formik library to validate inputs */
+//to import formik : import {useFormik} from 'formik';
+// const EmployeeComponent = () => {
+// 	const formik = useFormik({
+// 		initialValues: {
+// 			Id: "",
+// 			Name: "",
+// 			Location: "",
+// 			Salary: ""
+// 		},
+// 		onSubmit: values =>{
+// 			alert(JSON.stringify(values));
+// 		}
+// 	});
+
+// 	return (
+// 		<div>
+// 			<h2>New Employee Form...</h2>
+// 			<form onSubmit={formik.handleSubmit}>
+// 				<p>
+// 					<label htmlFor="Id">Employee Id:</label>
+// 					<input type="text" name="Id" id="Id" value={formik.values.Id} onChange={formik.handleChange}></input>
+// 				</p>
+// 				<p>
+// 					<label htmlFor="Name">Employee Name:</label>
+// 					<input type="text" name="Name" id="Name" value={formik.values.Name} onChange={formik.handleChange}></input>
+// 				</p>
+// 				<p>
+// 					<label htmlFor="Location">Employee Location:</label>
+// 					<input type="text" name="Location" id="Location" value={formik.values.Location} onChange={formik.handleChange}></input>
+// 				</p>
+// 				<p>
+// 					<label htmlFor="Salary">Employee Salary:</label>
+// 					<input type="text" name="Salary" id="Salary" value={formik.values.Salary} onChange={formik.handleChange}></input>
+// 				</p>
+// 				<button type="submit">Create</button>
+// 			</form>
+// 		</div>
+// 	)
+// }
+
+// const element = <EmployeeComponent></EmployeeComponent>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+/**** How to validate Forms in React  Lesson 14 --CONTINUE LESSON 13-- using Formik library to validate inputs */
+// const ValidateEmployee = empData => {
+// 	const errors = {};
+
+// 	if(!empData.Name){
+// 		errors.Name = "Please enter employee name";
+// 	}
+// 	else if(!empData.Name.length > 20){
+// 		errors.Name = "Employee name should not exceed 20 characters";
+// 	}
+// 	if(!empData.Location){
+// 		errors.Location = "Please enter employee location";
+// 	}
+// 	if(!empData.Email){
+// 		errors.Email = "Please enter employee email";
+// 	}
+// 	else if(!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/i.test(empData.Email)){
+// 		errors.Email = "Invalid email address";
+// 	}
+// 	return errors;
+// }
+
+// const EmployeeComponent = () => {
+// 	const formik = useFormik({
+// 		initialValues: {
+// 			Id: "",
+// 			Name: "",
+// 			Location: "",
+// 			Salary: "",
+// 			Email: ""
+// 		},
+// 		validate: ValidateEmployee,
+// 		onSubmit: values =>{
+// 			alert(JSON.stringify(values));
+// 		}
+// 	});
+
+// 	return (
+// 		<div>
+// 			<h2>New Employee Form...</h2>
+// 			<form onSubmit={formik.handleSubmit}>
+// 				<p>
+// 					<label htmlFor="Id">Employee Id:</label>
+// 					<input type="text" name="Id" id="Id" value={formik.values.Id} onChange={formik.handleChange}></input>
+// 				</p>
+// 				<p>
+// 					<label htmlFor="Name">Employee Name:</label>
+// 					<input type="text" name="Name" id="Name" value={formik.values.Name} onChange={formik.handleChange} onBlur={formik.handleBlur}></input>
+// 					{formik.touched.Name && formik.errors.Name ? <span style={{color:'red'}}>{formik.errors.Name}</span> : null}
+// 				</p>
+// 				<p>
+// 					<label htmlFor="Location">Employee Location:</label>
+// 					<input type="text" name="Location" id="Location" value={formik.values.Location} onChange={formik.handleChange} onBlur={formik.handleBlur}></input>
+// 					{formik.touched.Location && formik.errors.Location ? <span style={{color:'red'}}>{formik.errors.Location}</span> : null}
+// 				</p>
+// 				<p>
+// 					<label htmlFor="Salary">Employee Salary:</label>
+// 					<input type="text" name="Salary" id="Salary" value={formik.values.Salary} onChange={formik.handleChange}></input>
+// 				</p>
+// 				<p>
+// 					<label htmlFor="Email">Employee Email:</label>
+// 					<input type="text" name="Email" id="Email" value={formik.values.Email} onChange={formik.handleChange} onBlur={formik.handleBlur}></input>
+// 					{formik.touched.Email && formik.errors.Email ? <span style={{color:'red'}}>{formik.errors.Email}</span> : null}
+// 				</p>
+// 				<button type="submit">Create</button>
+// 			</form>
+// 		</div>
+// 	)
+// }
+
+// const element = <EmployeeComponent></EmployeeComponent>
+//  ReactDOM.render(element, document.getElementById("root"));
+
+
+
+/*** Validation using YUP library  ***/
+// to import yup library: import * as yup from 'yup';
+// const EmployeeComponent = () => {
+// 	const formik = useFormik({
+// 		initialValues: {
+// 			Id: "",
+// 			Name: "",
+// 			Location: "",
+// 			Salary: "",
+// 			Email: ""
+// 		},
+// 		validationSchema: yup.object({
+// 			Name: yup.string().max(20, 'Name should not exceed 20 chars').required("Please Enter Employee Name"),
+// 			Location: yup.string().required("Please Enter Employee Location"),
+// 			Email: yup.string().email("Invalid email address").required("Please Enter Employee Name"),
+// 		}),
+// 		onSubmit: values =>{
+// 			alert(JSON.stringify(values));
+// 		}
+// 	});
+
+// 	return (
+// 		<div>
+// 			<h2>New Employee Form...</h2>
+// 			<form onSubmit={formik.handleSubmit}>
+// 				<p>
+// 					<label htmlFor="Id">Employee Id:</label>
+// 					<input name="Id" {...formik.getFieldProps("Id")}></input>
+// 				</p>
+// 				<p>
+// 					<label htmlFor="Name">Employee Name:</label>
+// 					<input name="Name" {...formik.getFieldProps("Name")}></input>
+// 					{formik.touched.Name && formik.errors.Name ? <span style={{color:'red'}}>{formik.errors.Name}</span> : null}
+// 				</p>
+// 				<p>
+// 					<label htmlFor="Location">Employee Location:</label>
+// 					<input name="Location" {...formik.getFieldProps("Location")}></input>
+// 					{formik.touched.Location && formik.errors.Location ? <span style={{color:'red'}}>{formik.errors.Location}</span> : null}
+// 				</p>
+// 				<p>
+// 					<label htmlFor="Salary">Employee Salary:</label>
+// 					<input name="Salary" {...formik.getFieldProps("Salary")} onChange={formik.handleChange}></input>
+// 				</p>
+// 				<p>
+// 					<label htmlFor="Email">Employee Email:</label>
+// 					<input name="Email" {...formik.getFieldProps("Email")}></input>
+// 					{formik.touched.Email && formik.errors.Email ? <span style={{color:'red'}}>{formik.errors.Email}</span> : null}
+// 				</p>
+// 				<button type="submit">Create</button>
+// 			</form>
+// 		</div>
+// 	)
+// }
+
+// const element = <EmployeeComponent></EmployeeComponent>
+//  ReactDOM.render(element, document.getElementById("root"));
+
+
+
+/***  Understanding Forms in React  Lesson 15 ***/
+// Cleaning up code with formik
+// const EmployeeComponent = () => {
+// 	return (
+// 		<Formik initialValues={{
+// 			Id: "",
+// 			Name: "",
+// 			Location: "",
+// 			Salary: "",
+// 			Email: "",
+// 			Designation: ""
+// 		}} validationSchema={yup.object({
+// 			Name: yup.string().max(20, 'Name should not exceed 20 chars').required("Please Enter Employee Name"),
+// 			Location: yup.string().required("Please Enter Employee Location"),
+// 			Email: yup.string().email("Invalid email address").required("Please Enter Employee Name")
+// 		})}
+// 		onSubmit={values =>{
+// 			alert(JSON.stringify(values));
+// 		}}>
+// 			{
+// 				props =>(
+// 					<div>
+// 						<h2>New Employee Form...</h2>
+// 						<Form>
+// 							<p>
+// 								<label htmlFor="Id">Employee Id:</label>
+// 								<Field name="Id" type="text"></Field>
+// 							</p>
+// 							<p>
+// 								<label htmlFor="Name">Employee Name:</label>
+// 								<Field name="Name" type="text"></Field>
+// 								<ErrorMessage name="Name"></ErrorMessage>
+// 							</p>
+// 							<p>
+// 								<label htmlFor="Location">Employee Location:</label>
+// 								<Field name="Location" type="text"></Field>
+// 								<ErrorMessage name="Location"></ErrorMessage>
+// 							</p>
+// 							<p>
+// 								<label htmlFor="Salary">Employee Salary:</label>
+// 								<Field name="Salary" type="text"></Field>
+// 							</p>
+// 							<p>
+// 								<label htmlFor="Email">Employee Email:</label>
+// 								<Field name="Email" type="text"></Field>
+// 								<ErrorMessage name="Email"></ErrorMessage>
+// 							</p>
+// 							<p>
+// 								<label htmlFor="Designation">Employee Designation:</label>
+// 								<Field name="Designation" as="select">
+// 									<option value="SoftwareEngineer">Software Engineer</option>
+// 									<option value="SeniorSoftwareEngineer">Senior Software Engineer</option>
+// 									<option value="Lead">Lead</option>
+// 								</Field>
+// 							</p>
+// 							<button type="submit" disabled={!props.isValid}>Create</button>
+// 						</Form>
+// 					</div>
+// 				)
+// 			}
+// 		</Formik>
+// 	);
+// }
+
+// const element = <EmployeeComponent></EmployeeComponent>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+
+/***  Lifting State Up in React   Lesson 16 ***/
+// class OrderComponent extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 		this.state = {
+// 			quantity:"",
+// 			address:""
+// 		};
+// 	}
+
+// 	orderInfoChanged = (val) => {
+// 		this.setState({quantity: val});
+// 	}
+
+// 	addressChanged = (val) => {
+// 		this.setState({address: val});
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div>
+// 				<h1>Product Order Screen...</h1>
+// 				<ProductInformationComponent quantity={this.state.quantity} onQuantityChange={this.orderInfoChanged}></ProductInformationComponent>
+// 				<AddressComponent address={this.state.address} onAddressChange={this.addressChanged}></AddressComponent>
+// 				<SummaryComponent quantity={this.state.quantity} onQuantityChange={this.orderInfoChanged} address={this.state.address}></SummaryComponent>
+// 			</div>
+// 		);
+// 	}
+// }
+
+// class ProductInformationComponent extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 	}
+
+// 	handleChange = (e) =>{
+// 		this.props.onQuantityChange(e.target.value)
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div style={{border:"3px solid red"}}>
+// 				<h2>Product Information...</h2>
+// 				<p>
+// 					<label>Product Name:</label>
+// 					<select>
+// 						<option value="Product-1">Product-1</option>
+// 						<option value="Product-2">Product-2</option>
+// 						<option value="Product-3">Product-3</option>
+// 						<option value="Product-4">Product-4</option>
+// 					</select>
+// 				</p>
+// 				<p>
+// 					<label>Enter Quantity: <input type="text" value={this.props.quantity} onChange={this.handleChange}></input></label>
+// 				</p>
+// 			</div>
+// 		);
+// 	}
+// }
+
+// class AddressComponent extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 	}
+
+// 	handleChange = (e) => {
+// 		this.props.onAddressChange(e.target.value);
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div style={{border:"3px solid red"}}>
+// 				<h2>Adderss information...</h2>
+// 				<p>
+// 					<lable>Address:</lable>
+// 					<textarea value={this.props.address} onChange={this.handleChange}></textarea>
+// 				</p>
+// 			</div>
+// 		);
+// 	}
+// }
+
+// class SummaryComponent extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 	}
+
+// 	handleChange = (e) =>{
+// 		this.props.onQuantityChange(e.target.value);
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div style={{border:"3px solid red"}}>
+// 				<h2>Summary Information...</h2>
+// 				<p>
+// 					<label>Product Name</label>
+
+// 				</p>
+// 				<p>
+// 					<label>Enter Quantity: <input type="text" value={this.props.quantity} onChange={this.handleChange}></input></label>
+// 				</p>
+// 				<p>
+// 					<lable>Address:</lable>
+// 					<b>{this.props.address}</b>
+// 				</p>
+// 				<button>Place Order</button>
+// 			</div>
+// 		);
+// 	}
+// }
+
+// const element = <OrderComponent></OrderComponent>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+
+/***  Error Boundaries in React   Lesson 17 ***/
+// class CustomErrorBoundary extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 		this.state = {
+// 			hasError: false
+// 		};
+// 	}
+	
+// 	static getDerivedStateFromError(error) {
+// 		return { hasError: true };
+// 	}
+
+// 	componentDidCatch(error, errorInfo) {
+// 		console.log(error);
+// 		console.log(errorInfo);
+// 	}
+
+// 	render(){
+// 		if (this.state.hasError){
+// 			return <h2>We are having Problems to Load your Preferrences now.</h2>;
+// 		}
+// 		return this.props.children;
+// 	}
+// }
+
+// class OrderComponent extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 		this.state = {
+// 			quantity:"",
+// 			address:""
+// 		};
+// 	}
+
+// 	orderInfoChanged = (val) => {
+// 		this.setState({quantity: val});
+// 	}
+
+// 	addressChanged = (val) => {
+// 		this.setState({address: val});
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div>
+// 				<h1>Product Order Screen...</h1>
+// 				<ProductInformationComponent quantity={this.state.quantity} onQuantityChange={this.orderInfoChanged}></ProductInformationComponent>
+// 				<AddressComponent address={this.state.address} onAddressChange={this.addressChanged}></AddressComponent>
+// 				<SummaryComponent quantity={this.state.quantity} onQuantityChange={this.orderInfoChanged} address={this.state.address}></SummaryComponent>
+// 			</div>
+// 		);
+// 	}
+// }
+
+// class ProductInformationComponent extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 	}
+
+// 	handleChange = (e) =>{
+// 		this.props.onQuantityChange(e.target.value)
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div style={{border:"3px solid red"}}>
+// 				<h2>Product Information...</h2>
+// 				<p>
+// 					<label>Product Name:</label>
+// 					<select>
+// 						<option value="Product-1">Product-1</option>
+// 						<option value="Product-2">Product-2</option>
+// 						<option value="Product-3">Product-3</option>
+// 						<option value="Product-4">Product-4</option>
+// 					</select>
+// 				</p>
+// 				<p>
+// 					<label>Enter Quantity: <input type="text" value={this.props.quantity} onChange={this.handleChange}></input></label>
+// 				</p>
+// 			</div>
+// 		);
+// 	}
+// }
+
+// class AddressComponent extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 	}
+
+// 	handleChange = (e) => {
+// 		this.props.onAddressChange(e.target.value);
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div style={{border:"3px solid red"}}>
+// 				<h2>Adderss information...</h2>
+// 				<p>
+// 					<lable>Address:</lable>
+// 					<textarea value={this.props.address} onChange={this.handleChange}></textarea>
+// 				</p>
+// 				<CustomErrorBoundary>
+// 					<UserPreferredAddressList></UserPreferredAddressList>
+// 				</CustomErrorBoundary>
+// 			</div>
+// 		);
+// 	}
+// }
+
+// class UserPreferredAddressList extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 	}
+
+// 	render(){
+// 		throw new Error("Not able to load address list");
+// 		return(
+// 			<div>
+// 				<h2>Your Existing Addresses...</h2>
+// 				<p>
+// 					Office<br></br>
+// 					Home<br></br>
+// 				</p>
+// 			</div>
+// 		);
+// 	}
+// }
+
+// class SummaryComponent extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 	}
+
+// 	handleChange = (e) =>{
+// 		this.props.onQuantityChange(e.target.value);
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div style={{border:"3px solid red"}}>
+// 				<h2>Summary Information...</h2>
+// 				<p>
+// 					<label>Product Name</label>
+
+// 				</p>
+// 				<p>
+// 					<label>Enter Quantity: <input type="text" value={this.props.quantity} onChange={this.handleChange}></input></label>
+// 				</p>
+// 				<p>
+// 					<lable>Address:</lable>
+// 					<b>{this.props.address}</b>
+// 				</p>
+// 				<button>Place Order</button>
+// 			</div>
+// 		);
+// 	}
+// }
+
+// const element = <OrderComponent></OrderComponent>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+
+/***  Fragments in React  Lesson 18 ***/
+// If we want to return multiple containers from a react component react will throw an error so
+// in order to avoid that React introduced FRAGMENTS: <React.Fragment> <!-- Here we can place multiple div containers to be returned --></React.Fragment> or React EMPTY tags: <></>
+
+
+
+/****  Refs in React  Lesson 19 ****/
+// class QuantityIncrement extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 		this.quantityRef = React.createRef();
+// 	}
+
+// 	incrementQuantity = () => {
+// 		this.quantityRef.current.value++;
+// 	}
+
+// 	render(){
+// 		return <div>
+// 			<p>
+// 				<label>Enter quantity</label>
+// 				<input type="text" ref={this.quantityRef}></input>
+// 				<button onClick={this.incrementQuantity}>+</button>
+// 			</p>
+// 		</div>
+// 	}
+// }
+
+// class LogIn extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 		this.userNameRef = React.createRef();
+// 	}
+
+// 	componentDidMount(){
+// 		this.userNameRef.current.focus();
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div>
+// 				<h2>Login Screen...</h2>
+// 				<p>
+// 					<label>User Name:</label>
+// 					<input type="text" ref={this.userNameRef}></input>
+// 				</p>
+// 				<p>
+// 					<label>User Password:</label>
+// 					<input type="text"></input>
+// 				</p>
+// 				<button>LogIn</button>
+// 			</div>
+// 		);
+// 	}
+// }
+
+
+// class VideoPlayer extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 		this.videoRef = React.createRef();
+// 	}
+
+// 	playVideo = () => {
+// 		this.videoRef.current.play();
+// 	}
+// 	pauseVideo = () => {
+// 		this.videoRef.current.pause();
+// 	}
+// 	render(){
+// 		return(
+// 			<div>
+// 				<video ref={this.videoRef} width="300" height="200" controls>
+// 					<source src={video} type="video/mp4"></source>
+// 				</video>
+// 				<div>
+// 					<button onClick={this.playVideo}>Play</button>
+// 					<button onClick={this.pauseVideo}>Pause</button>
+// 				</div>
+// 			</div>
+// 		)
+// 	}
+// }
+
+// // only one component at a time
+// const element = <QuantityIncrement></QuantityIncrement>
+// const element = <LogIn></LogIn>
+// const element = <VideoPlayer></VideoPlayer>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+
+/****  Refs in React Continued  Lesson 20 ****/
+// const DemoComponent = React.forwardRef((props, ref) => {
+// 	function testClick(){
+// 		ref.current.focus();
+// 	}
+// 	return(
+// 		<button onClick={testClick}>Focus!</button>
+// 	)
+// });
+
+// class Elevator extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 		this.elevatorRef = React.createRef();
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div>
+// 				<h2>welcome to Elevator ordering Screen...</h2>
+// 				<p>
+// 					<label>Elevator Name:</label>
+// 					<input ref={this.elevatorRef} type="text"></input>
+// 				</p>
+// 				<p>
+// 					<label>Elevator Speed:</label>
+// 					<input type="text"></input>
+// 				</p>
+// 				<p>
+// 					<label>Elevator Load:</label>
+// 					<input type="text"></input>
+// 				</p>
+// 				<Summary innerRef={this.elevatorRef}></Summary>
+// 				<DemoComponent ref={this.elevatorRef}></DemoComponent>
+// 			</div>
+// 		);
+// 	}
+// }
+
+// class Summary extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 	}
+
+// 	focusInput = () => {
+// 		this.props.innerRef.current.focus();
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div>
+// 				<h2>Summary Details...</h2>
+// 				<p onClick={this.focusInput}>
+// 					<label>Elevator Name: <b>Name - 1</b></label>
+// 				</p>
+// 				<p>
+// 					<label>Elevator Speed: <b>10 m/s</b></label>
+// 				</p>
+// 				<p>
+// 					<label>Elevator Load: <b>550 Kg</b></label>
+// 				</p>
+// 			</div>
+// 		);
+// 	}
+// }
+
+// function testComponent(){
+// 	let testRef = null;
+// 	function handleClick(){
+// 		testRef.focus()
+// 	}
+
+// 	return(
+// 		<div>
+// 			<input type="text" ref={e=>testRef=e} />
+// 			<input type="button" value="Focus the text input" onClick={handleClick} />
+// 		</div>
+// 	)
+// }
+
+// const element = <Elevator></Elevator>
+// // const element = testComponent();
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+
+/****  Higher Order Components in React  Lesson 21 ****/
