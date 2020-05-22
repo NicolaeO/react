@@ -1,4 +1,4 @@
-import React,  { Component, Profiler } from 'react';
+import React,  { Component, Profiler, useState} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import {useFormik, Formik, ErrorMessage, Field, Form} from 'formik';
@@ -2052,4 +2052,234 @@ import video from "../src/assets/Abigail.MOV";
 
 
 /****  Indroducing to Hooks in React   Lesson 27 ****/
+// class Employee extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 		this.state = {
+// 			Name: ""
+// 		};
+// 	}
 
+// 	changeName = (e) => {
+// 		this.setState({Name: e.target.value});
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div>
+// 				<h2>Welcome to Employee Component...</h2>
+// 				<p>
+// 					<label>Employee: 
+// 						<input type="text" value={this.state.Name} onChange={this.changeName}></input>
+// 					</label>
+// 				</p>
+// 				<p>
+// 					Enterd Name is: <b>{this.state.Name}</b>
+// 				</p>
+// 			</div>
+// 		);
+// 	}
+// }
+
+
+// //Using a hook call the useState() function
+// function NewEmployee(){
+// 	const [name, setName] = useState();
+
+// 	function changeName(e){
+// 		setName(e.target.value);
+// 	}
+	
+// 	return(
+// 		<div>
+// 			<h2>Welcome to Employee Function Component...</h2>
+// 			<p>
+// 				<label>Employee: 
+// 					<input type="text" value={name} onChange={changeName}></input>
+// 				</label>
+// 			</p>
+// 			<p>
+// 				Enterd Name is: <b>{name}</b>
+// 			</p>
+// 		</div>
+// 	);
+// }
+
+// // const element = <Employee></Employee>
+// const element = <NewEmployee></NewEmployee>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+
+/****   useState in React   Lesson 29 ****/
+//Using a hook call the useState() function
+// function NewEmployee(){
+// 	const [name, setName] = useState();
+// 	const [location, setLocation] = useState();
+
+// 	function changeName(e){
+// 		setName(e.target.value);
+// 	}
+
+// 	function changeLocation(e){
+// 		setLocation(e.target.value);
+// 	}
+	
+// 	return(
+// 		<div>
+// 			<h2>Welcome to Employee Function Component...</h2>
+// 			<p>
+// 				<label>Employee Name: 
+// 					<input type="text" value={name} onChange={changeName}></input>
+// 				</label>
+// 			</p>
+// 			<p>
+// 				<label>Employee Location: 
+// 					<input type="text" value={location} onChange={changeLocation}></input>
+// 				</label>
+// 			</p>
+// 			<p>
+// 				Enterd Name is: <b>{name}</b>
+// 				Enterd Location is: <b>{location}</b>
+// 			</p>
+// 		</div>
+// 	);
+// }
+
+
+// // combining state variables
+// function NewEmployeeStatVars(){
+// 	const [employee, setEmployeeData] = useState({
+// 		Id: "",
+// 		Name: "",
+// 		Location: "",
+// 		Salary: ""
+// 	});
+
+// 	function changeEmployeeInfo(e){
+// 		setEmployeeData({...employee, [e.target.name]: e.target.value});
+// 	}
+
+	
+// 	return(
+// 		<div>
+// 			<h2>Welcome to Employee Function Component...</h2>
+// 			<p>
+// 				<label>Employee ID:
+// 					<input type="text" name="Id" value={employee.Id} onChange={changeEmployeeInfo}></input>
+// 				</label>
+// 			</p>
+// 			<p>
+// 				<label>Employee Name:
+// 					<input type="text" name="Name" value={employee.Name} onChange={changeEmployeeInfo}></input>
+// 				</label>
+// 			</p>
+// 			<p>
+// 				<label>Employee Location: 
+// 					<input type="text" name="Location" value={employee.Location} onChange={changeEmployeeInfo}></input>
+// 				</label>
+// 			</p>
+// 			<p>
+// 				<label>Employee Salary: 
+// 					<input type="text" name="Salary" value={employee.Salary} onChange={changeEmployeeInfo}></input>
+// 				</label>
+// 			</p>
+// 			<p>
+// 				Enterd ID is: <b>{employee.Id}</b>
+// 			</p>
+// 			<p>
+// 				Enterd NAME is: <b>{employee.Name}</b>
+// 			</p>
+// 			<p>
+// 				Enterd Location is: <b>{employee.Location}</b>
+// 			</p>
+// 			<p>
+// 				Enterd Salary is: <b>{employee.Salary}</b>
+// 			</p>
+// 		</div>
+// 	);
+// }
+
+
+// const element = <NewEmployeeStatVars></NewEmployeeStatVars>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+
+/****  Sharing State Data between Function Components in React   Lesson 29 ****/
+// function NewEmployee(){
+// 	const [employee, setEmployeeData] = useState({
+// 		Id:"",
+// 		Name: "",
+// 		Location: "",
+// 		Salary: ""
+// 	});
+
+// 	function changeEmployeeInfo(e){
+// 		setEmployeeData({...employee, [e.target.name]: e.target.value});
+// 	}
+
+// 	return(
+// 		<div>
+// 			<h2>Welcome to Employee Function Component...</h2>
+// 			<p>
+// 				<label>Employee ID:
+// 					<input type="text" name="Id" value={employee.Id} onChange={changeEmployeeInfo}></input>
+// 				</label>
+// 			</p>
+// 			<p>
+// 				<label>Employee Name:
+// 					<input type="text" name="Name" value={employee.Name} onChange={changeEmployeeInfo}></input>
+// 				</label>
+// 			</p>
+// 			<p>
+// 				<label>Employee Location: 
+// 					<input type="text" name="Location" value={employee.Location} onChange={changeEmployeeInfo}></input>
+// 				</label>
+// 			</p>
+// 			<p>
+// 				<label>Employee Salary: 
+// 					<input type="text" name="Salary" value={employee.Salary} onChange={changeEmployeeInfo}></input>
+// 				</label>
+// 			</p>
+// 			<p>
+// 				Enterd ID is: <b>{employee.Id}</b>
+// 			</p>
+// 			<p>
+// 				Enterd NAME is: <b>{employee.Name}</b>
+// 			</p>
+// 			<p>
+// 				Enterd Location is: <b>{employee.Location}</b>
+// 			</p>
+// 			<p>
+// 				Enterd Salary is: <b>{employee.Salary}</b>
+// 			</p>
+// 			<SalaryComponent salary={employee.Salary} onSalaryChange={changeEmployeeInfo}></SalaryComponent>
+// 		</div>
+// 	);
+// }
+
+
+// const SalaryComponent = ({onSalaryChange, salary}) => {
+// 	return(
+// 		<div>
+// 			<h2>Welcome to Salary Component...</h2>
+// 			<p>
+// 				<label>Employee Salary: 
+// 					<input type="text" name="Salary" value={salary} onChange={onSalaryChange}></input>
+// 				</label>
+// 			</p>
+// 		</div>
+// 	)
+// }
+
+
+// const element = <NewEmployee></NewEmployee>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+
+/****   useEfect Hook in React   Lesson 30 ****/
