@@ -1,4 +1,4 @@
-import React from 'react';
+import React,  { Component, Profiler } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import {useFormik, Formik, ErrorMessage, Field, Form} from 'formik';
@@ -1396,3 +1396,660 @@ import video from "../src/assets/Abigail.MOV";
 
 
 /****  Higher Order Components in React  Lesson 21 ****/
+// class EmployeeReports extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 		this.state = {
+// 			employees: []
+// 		};
+// 	}
+
+// 	componentDidMount(){
+// 		fetch("http://localhost:5000/api/users")
+// 		.then(res=>res.json())
+// 		.then(
+// 			(result) => {
+// 				this.setState({
+// 					employees: result
+// 				});
+// 			}
+// 		);
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div>
+// 				<h2>Employees Data...</h2>				
+// 				<table>
+// 					<thead>
+// 						<tr>
+// 							<th>Id</th>
+// 							<th>Name</th>
+// 							<th>Location</th>
+// 							<th>Salary</th>
+// 						</tr>
+// 					</thead>
+// 					<tbody>
+// 						{this.state.employees.map(emp => (
+// 							<tr key={emp.id}>
+// 								<td>{emp.id}</td>
+// 								<td>{emp.name}</td>
+// 								<td>{emp.location}</td>
+// 								<td>{emp.salary}</td>
+// 							</tr>
+// 						))}
+// 					</tbody>
+// 				</table>
+// 			</div>
+// 		)
+// 	}
+// }
+
+// class DeptReports extends React.Component {
+// 	constructor(props){
+// 		super(props);
+// 		this.state = {
+// 			dept: []
+// 		};
+// 	}
+	
+// 	componentDidMount(){
+// 		fetch("http://localhost:5000/api/department")
+// 		.then(res => res.json())
+// 		.then(
+// 			(result) => {
+// 				this.setState({
+// 					dept: result
+// 				});
+// 			}
+// 		)
+// 	}
+	
+// 	render(){
+// 		return(
+// 			<div>
+// 				<h2>Department Data...</h2>
+// 				<table>
+// 					<thead>
+// 						<tr>
+// 							<th>Id</th>
+// 							<th>Name</th>
+// 							<th>Revenue</th>
+// 						</tr>
+// 					</thead>
+// 					<tbody>
+// 						{this.state.dept.map(d => (
+// 							<tr key={d.Id}>
+// 								<td>{d.Id}</td>
+// 								<td>{d.Name}</td>
+// 								<td>{d.Revenue}</td>
+// 							</tr>
+// 						))}
+// 					</tbody>
+// 				</table>
+// 			</div>
+// 		);
+// 	}
+// }
+
+// class AdminDashboard extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 	}
+
+// 	render(){
+// 		return (
+// 			<React.Fragment>
+// 				<EmployeeReports></EmployeeReports>
+// 				<DeptReports></DeptReports>
+// 			</React.Fragment>
+// 		);
+// 	}
+// }
+
+// const element = <AdminDashboard></AdminDashboard>
+// ReactDOM.render(element, document.getElementById('root'));
+
+
+
+/***  Portals in React   Lesson 22 ***/
+// class Employee extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 		this.state = {
+// 			employees: [],
+// 			showModal: false
+// 		};
+// 	}
+
+// 	componentDidMount(){
+// 		fetch("http://localhost:5000/api/users")
+// 		.then(res=>res.json())
+// 		.then(
+// 			(result) => {
+// 				this.setState({
+// 					employees: result
+// 				});
+// 			}
+// 		);
+// 	}
+
+// 	editEmployee = () => {
+// 		this.setState({showModal: !this.state.showModal})
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div>
+// 				<h2>Employees Data...</h2>				
+// 				<table>
+// 					<thead>
+// 						<tr>
+// 							<th>Id</th>
+// 							<th>Name</th>
+// 							<th>Location</th>
+// 							<th>Salary</th>
+// 							<th>Actions</th>
+// 						</tr>
+// 					</thead>
+// 					<tbody>
+// 						{this.state.employees.map(emp => (
+// 							<tr key={emp.id}>
+// 								<td>{emp.id}</td>
+// 								<td>{emp.name}</td>
+// 								<td>{emp.location}</td>
+// 								<td>{emp.salary}</td>
+// 								<td>
+// 									<button onClick={this.editEmployee}>Edit</button>
+// 									<Modal open={this.state.showModal} close={this.editEmployee}>
+// 										<EmployeeModal employee={emp}></EmployeeModal>
+// 									</Modal>
+// 								</td>
+// 							</tr>
+// 						))}
+// 					</tbody>
+// 				</table>
+// 			</div>
+// 		)
+// 	}
+// }
+
+
+// class Modal extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 	}
+
+// 	render(){
+// 		return(
+// 			this.props.open?ReactDOM.createPortal(
+// 				<div className="modal">
+// 					<button className="close" onClick={this.props.close}>X</button>
+// 					{this.props.children}
+// 				</div>, document.body):null
+// 		);
+// 	}
+// }
+
+
+// class EmployeeModal extends React.Component{
+// 	constructor(props){
+// 		super(props);
+		
+// 	}
+	
+// 	render(){
+// 		return(
+// 			<div>
+// 				<h2>Employee Details...</h2>
+// 				<p>
+// 					<label>Employee Id: <input type="text" value={this.props.employee.id}></input></label>
+// 				</p>
+// 				<p>
+// 					<label>Employee Name: <input type="text" value={this.props.employee.name}></input></label>
+// 				</p>
+// 				<p>
+// 					<label>Employee Location: <input type="text" value={this.props.employee.location}></input></label>
+// 				</p>
+// 				<p>
+// 					<label>Employee Salary: <input type="text" value={this.props.employee.salary}></input></label>
+// 				</p>
+// 				<input type="submit" value="Save"></input>
+// 			</div>
+// 		)
+// 	}
+// }
+
+// const element = <Employee></Employee>
+// ReactDOM.render(element, document.getElementById('root'));
+
+
+
+
+/***  Profiler in React   Lesson 23 ***/
+// class NewAccountReports extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 		this.state = {
+// 			FromDate: '',
+// 			ToDate: ''
+// 		};
+// 	}
+
+// 	handleChange = (e) => {
+// 		let name = e.target.name;
+// 		let value = e.target.value;
+// 		this.setState({
+// 			[name]: value
+// 		});
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div>
+// 				<h2>Welcome to New Accounts Reports Component...</h2>
+// 				<p>
+// 					<label>From Date: <input type="text" name="FromDate" onChange={this.handleChange} value={this.state.FromDate}></input></label>
+// 				</p>
+// 				<p>
+// 					<label>To Date: <input type="text" name="ToDate" onChange={this.handleChange} value={this.state.ToDate}></input></label>
+// 				</p>
+// 				<input type="submit" value="Generate"></input>
+// 			</div>
+// 		)
+// 	}
+// }
+
+
+// class LoanRepaymentReports extends React.Component{
+// 	constructor(props){
+// 		super(props);
+
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div>
+// 				<h2>Welcome to Loans Repayment Reports Component...</h2>
+// 			</div>
+// 		);
+// 	}
+// }
+
+
+// class ReportsDashboard extends React.Component{
+// 	constructor(props){
+// 		super(props);
+
+// 	}
+
+// 	callbackFunction = (id, phase, actualDuration, baseDuration, startTime, commitTime, interaction) => {
+// 		console.log(`Id is ${id}, phase is ${phase}`);
+// 		console.log(`Actual Duration is : ${actualDuration}, and base Duration is: ${baseDuration}`);
+// 	}
+
+// 	render(){
+// 		return(
+// 			<React.Fragment>
+// 				<h2>Welcome to Reports Dashboard</h2>
+// 				<Profiler id="newAccounts" onRender={this.callbackFunction}>
+// 					<NewAccountReports></NewAccountReports>
+// 				</Profiler>
+// 				<Profiler id="Loans" onRender={this.callbackFunction}>
+// 					<LoanRepaymentReports></LoanRepaymentReports>
+// 				</Profiler>
+// 			</React.Fragment>	
+// 		);
+// 	}
+// }
+
+
+// const element = <ReportsDashboard></ReportsDashboard>
+// ReactDOM.render(element, document.getElementById("root"))
+
+
+
+
+/***  Render Props in React   Lesson 24 ***/
+// class Department extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 		this.state = {
+// 			list: ["Dev", "Big Data", "Mobility"]
+// 		};
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div>
+// 				<h2>Department</h2>
+// 				{this.props.render(this.state.list)} 
+// 			</div>
+// 		);
+// 	}
+// }
+
+
+// class Project extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div>
+// 				<h2>Project List...</h2>
+// 				{this.props.render(this.props.list)}
+// 			</div>
+// 		)
+// 	}
+// }
+
+
+// class App extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 	}
+
+// 	render(){
+// 		return(
+// 			<React.Fragment>
+// 				<Department render={(data)=><DisplayList list={data}></DisplayList>}></Department>
+// 				<Project render={(data)=><DisplayList list={["P-1", "P-2", "P-3"]}></DisplayList>}></Project>
+// 			</React.Fragment>
+// 		);
+// 	}
+// }
+
+
+// class EmployeeReports extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 		this.state = {
+// 			employees: []
+// 		};
+// 	}
+
+// 	componentDidMount(){
+// 		fetch("http://localhost:5000/api/users")
+// 		.then(res=>res.json())
+// 		.then(
+// 			(result) => {
+// 				this.setState({
+// 					employees: result
+// 				});
+// 			}
+// 		);
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div>
+// 				<h2>Employees Data...</h2>
+// 				{this.props.content(this.state.employees)}
+// 			</div>
+// 		)
+// 	}
+// }
+
+
+// class DisplayEmployees extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 	}
+
+// 	render(){
+// 		return(
+// 			<table>
+// 				<thead>
+// 					<tr>
+// 						<th>Id</th>
+// 						<th>Name</th>
+// 						<th>Location</th>
+// 						<th>Salary</th>
+// 					</tr>
+// 				</thead>
+// 				<tbody>
+// 					{this.props.employees.map(emp => (
+// 						<tr key={emp.id}>
+// 							<td>{emp.id}</td>
+// 							<td>{emp.name}</td>
+// 							<td>{emp.location}</td>
+// 							<td>{emp.salary}</td>
+// 						</tr>
+// 					))}
+// 				</tbody>
+// 			</table>
+// 		)
+// 	}
+// }
+
+
+// class DisplayList extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 	}
+
+// 	render(){
+// 		return(
+// 			<ul>
+// 				{this.props.list.map(d=>(
+// 					<li>{d}</li>
+// 				))}
+// 			</ul>
+// 		)
+// 	}
+// }
+
+
+// // const element = <App></App>
+// const element = <EmployeeReports content={(input)=><DisplayEmployees employees={input}></DisplayEmployees>} ></EmployeeReports>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+
+/***   Pure Components in React  Lesson 25 ***/
+// class ChangeDetection extends React.PureComponent{
+// 	constructor(props){
+// 		super(props);
+// 		this.state = {
+// 			employeeCount: 0
+// 		};
+// 		setInterval(this.getEmployeesCount(), 5000);
+// 	}
+
+// 	getEmployeesCount = () => {
+// 		fetch("http://localhost:5000/api/users")
+// 			.then(res=>res.json())
+// 			.then(
+// 				(result) => {
+// 					this.setState({
+// 						employeeCount: result.length
+// 					});
+// 				}
+// 			);
+// 	}
+
+// 	componentDidMount(){
+// 		this.getEmployeesCount();
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div>
+// 				<h2>Welcome to Pure Component Demonstration...</h2>
+// 				<p>
+// 					<label>Number of Employees are: <b>{this.state.employeeCount}</b></label>
+// 				</p>
+// 			</div>
+// 		);
+// 	}
+// }
+
+
+// class Reports extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 		this.state = {
+// 			employees: []
+// 		};
+// 	}
+
+// 	componentDidMount = () => {
+// 		this.getEmployees();
+// 	}
+
+// 	getEmployees () {
+// 		fetch("http://localhost:5000/api/users")
+// 			.then(res=>res.json())
+// 			.then(
+// 				(result) => {
+// 					this.setState({
+// 						employees: result
+// 					});
+// 				}
+// 			);
+// 	}
+
+// 	loadEmployees = () => {
+// 		this.getEmployees();
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div>
+// 				<h2>Employees Data...</h2>
+// 				<table>
+// 					<thead>
+// 						<tr>
+// 							<th>Id</th>
+// 							<th>Name</th>
+// 							<th>Location</th>
+// 							<th>Salary</th>
+// 						</tr>
+// 					</thead>
+// 					<tbody>
+// 						{this.state.employees.map(emp => (
+// 							<tr key={emp.id}>
+// 								<td>{emp.id}</td>
+// 								<td>{emp.name}</td>
+// 								<td>{emp.location}</td>
+// 								<td>{emp.salary}</td>
+// 							</tr>
+// 						))}
+// 					</tbody>
+// 				</table>
+// 				<p>
+// 					<button onClick={this.loadEmployees}>Reload</button>
+// 				</p>
+// 			</div>
+// 		);
+// 	}
+// }
+
+
+// class App extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 	}
+
+// 	render(){
+// 		return(
+// 			<React.Fragment>
+// 				<ChangeDetection></ChangeDetection>
+// 				<Reports></Reports>
+// 			</React.Fragment>
+// 		)
+// 	}
+// }
+
+// const element = <App></App>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+
+/***  Component Lifecycle Methods in React   Lesson 26 ***/
+// class Employee extends React.Component{
+// 	constructor(props){
+// 		super(props);
+// 		this.state = {
+// 			name:""
+// 		}
+// 	}
+
+// 	changeName = (value) => {
+// 		this.setState({name: value})
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div>
+// 				<h2>Welcome to Employee component</h2>
+// 				<p>
+// 					<label>Employee Name: <input type="text" value={this.state.Name} onChange={this.changeName}></input></label>
+// 				</p>
+// 			</div>
+// 		);
+// 	}
+// }
+
+
+// class ChangeDetection extends React.Component{
+// 	handle = null;
+// 	constructor(props){
+// 		super(props);
+// 		this.state = {
+// 			employeeCount: 0
+// 		}
+
+// 		this.handle = setInterval(this.getEmployeeCount, 5000);
+// 	}
+
+// 	getEmployeesCount = () => {
+// 		fetch("http://localhost:5000/api/users")
+// 			.then(res=>res.json())
+// 			.then(
+// 				(result) => {
+// 					this.setState({
+// 						employeeCount: result.length
+// 					});
+// 				}
+// 			);
+// 	}
+
+// 	componentWillUnmount(){
+// 		clearInterval(this.handle);
+// 	}
+
+// 	componentDidMount(){
+// 		this.getEmployeesCount();
+// 	}
+
+// 	showReports = () => {
+// 		ReactDOM.render(<Reports></Reports>, document.getElementById("root"));
+// 	}
+
+// 	render(){
+// 		return(
+// 			<div>
+// 				<h2>Welcome to Pure Component Demonstration...</h2>
+// 				<p>
+// 					<label>Number of Employees are: <b>{this.state.employeeCount}</b></label>
+// 				</p>
+// 				<button onClick={this.showReports}>Show Reports</button>
+// 			</div>
+// 		);
+// 	}
+// }
+
+
+// const element = <Employee></Employee>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+
+/****  Indroducing to Hooks in React   Lesson 27 ****/
+
