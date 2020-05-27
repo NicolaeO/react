@@ -1,4 +1,4 @@
-import React,  { Component, Profiler, useState} from 'react';
+import React,  { Component, Profiler, useState, useEffect, useContext} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import {useFormik, Formik, ErrorMessage, Field, Form} from 'formik';
@@ -2283,3 +2283,351 @@ import video from "../src/assets/Abigail.MOV";
 
 
 /****   useEfect Hook in React   Lesson 30 ****/
+// function EmployeeComponent(){
+// 	const [employees, setEmployees] = useState([]);
+
+// 	//useEffect will run after the dom is rendered
+// 	useEffect(()=>{
+// 		alert("fuck");
+// 		fetch("http://localhost:5000/api/users")
+// 			.then(res=>res.json())
+// 			.then(
+// 				(result) => {
+// 					setEmployees(result);
+// 				}
+// 			);
+// 	},[]);
+// 	// by giving an empty array to the function it tells the effect hook that it does not depend on any other data
+
+// 	return (
+// 		<div>
+// 			<h2>Employees Data...</h2>
+// 			<table>
+// 				<thead>
+// 					<tr>
+// 						<th>Id</th>
+// 						<th>Name</th>
+// 						<th>Location</th>
+// 						<th>Salary</th>
+// 					</tr>
+// 				</thead>
+// 				<tbody>
+// 					{employees.map( emp => (
+// 						<tr key={emp.id}>
+// 							<td>{emp.id}</td>
+// 							<td>{emp.name}</td>
+// 							<td>{emp.location}</td>
+// 							<td>{emp.salary}</td>
+// 						</tr>
+// 					))}
+// 				</tbody>
+// 			</table>
+// 		</div>
+// 	)
+// }
+
+
+// const element = <EmployeeComponent></EmployeeComponent>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+/***  useEffec Part 2   Lesson 31 ***/
+// function EmployeeComponent(){
+// 	const [employees, setEmployees] = useState([]);
+// 	const [searchText, setSearchText] = useState("");
+
+// 	//useEffect will run after the dom is rendered
+// 	useEffect(()=>{
+// 		fetch(`http://localhost:5000/api/username?name=${searchText}`)
+// 			.then(res=>res.json())
+// 			.then(
+// 				(result) => {
+// 					setEmployees(result);
+// 				}
+// 			);
+// 	},[searchText]);
+// 	// by giving an empty array to the function it tells the effect hook that it does not depend on any properties or state
+	
+	
+// 	function onSearchTextChange(e){
+// 		setSearchText(e.target.value);
+// 	}
+
+
+// 	return (
+// 		<div>
+// 			<h2>Employees Data...</h2>
+// 			<label>Search by name
+// 				<input type="text" value={searchText} onChange={onSearchTextChange}></input>
+// 			</label>
+// 			<table>
+// 				<thead>
+// 					<tr>
+// 						<th>Id</th>
+// 						<th>Name</th>
+// 						<th>Location</th>
+// 						<th>Salary</th>
+// 					</tr>
+// 				</thead>
+// 				<tbody>
+// 					{employees.map( emp => (
+// 						<tr key={emp.id}>
+// 							<td>{emp.id}</td>
+// 							<td>{emp.name}</td>
+// 							<td>{emp.location}</td>
+// 							<td>{emp.salary}</td>
+// 						</tr>
+// 					))}
+// 				</tbody>
+// 			</table>
+// 		</div>
+// 	)
+// }
+
+
+// const element = <EmployeeComponent></EmployeeComponent>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+/*** useEffect Part 3   Lesson 32 ***/
+// function EmployeeCount(){
+// 	const [employeeCount, setEmployeeCount] = useState(0);
+// 	const [numberOfDays, setNumberOfDays] = useState(0);
+
+// 	useEffect(() =>{
+// 		var handle = setInterval(getEmployeesCount, 5000);
+		
+// 		return () => {
+// 			clearInterval(handle);
+// 		}
+// 	},[]);
+
+
+// 	useEffect( () => {
+// 		fetch(`http://localhost:5000/api/numberofdays`)
+// 		.then(res=>res.json())
+// 		.then(
+// 			(result) => {
+// 				setNumberOfDays(result);
+// 			}
+// 		);
+// 	}, [])
+
+
+// 	function getEmployeesCount() {
+// 		alert("called");
+// 		fetch(`http://localhost:5000/api/users`)
+// 			.then(res=>res.json())
+// 			.then(
+// 				(result) => {
+// 					setEmployeeCount(result.length);
+// 				}
+// 			);
+// 	}
+
+
+// 	function navigateToDepartments(){
+// 		const element = <Departments></Departments>
+// 		ReactDOM.render(element, document.getElementById('root'));
+// 	}
+
+// 	return(
+// 		<div>
+// 			<h2>Welcome to Employee Component</h2>
+// 			<p>
+// 				<label>Employee Count : <b>{employeeCount}</b></label>
+// 			</p>
+// 			<p>
+// 				Last Employee was added : <b>{numberOfDays}</b>
+// 			</p>
+// 			<button onClick={navigateToDepartments}>Departments</button>
+// 		</div>
+// 	)
+// }
+
+
+// function Departments(){
+// 	return(
+// 		<div>
+// 			<h2>Welcome to Departments Component...</h2>
+// 		</div>
+// 	)
+// }
+
+// const element = <EmployeeCount></EmployeeCount>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+
+/***  useContext Hook in React   Lesson 33 ***/
+// const employeeContext = React.createContext();
+
+// function App(){
+// 	const [employee, setEmployee] = useState({Id:"1", Name:"Nick", Salary:1234, Location:"Chicago"})
+// 	return(
+// 		<div>
+// 			<h2>Welcome to App Component</h2>
+// 			<employeeContext.Provider value={employee}>
+// 				<Employee></Employee>
+// 			</employeeContext.Provider>
+// 		</div>
+// 	)
+// }
+
+
+// function Employee(){
+// 	let context = useContext(employeeContext);
+// 	return(
+// 		<div>
+// 			<h2>Welcome to Employee Component</h2>
+// 			<p>
+// 				<label>
+// 					Employee ID: <b>{context.Id}</b>
+// 				</label>
+// 			</p>
+// 			<p>
+// 				<label>
+// 					Employee Name: <b>{context.Name}</b>
+// 				</label>
+// 			</p>
+// 			<Salary></Salary>
+// 		</div>
+// 	)
+// }
+
+
+// function Salary(){
+// 	let context = useContext(employeeContext);
+// 	return(
+// 		<div>
+// 			<h2>Welcome to Salary Component</h2>
+// 			<p>
+// 				<label>
+// 					Employee Salary: <b>{context.Salary}</b>
+// 				</label>
+// 			</p>
+// 			<p>
+// 				<label>
+// 					Employee Location: <b>{context.Location}</b>
+// 				</label>
+// 			</p>
+// 		</div>
+// 	)
+// }
+
+
+// const element = <App></App>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+/***  Context Consumer in React   Lesson 34 ***/
+// const employeeContext = React.createContext();
+
+// function App(){
+// 	const [employee, setEmployee] = useState({
+// 		Id:"1",
+// 		Name:"Nick",
+// 		Salary:1234,
+// 		Location:"Chicago",
+// 		EmploymentType:"Contract"
+// 	})
+// 	return(
+// 		<div>
+// 			<h2>Welcome to App Component</h2>
+// 			<p>
+// 				<label>Employee ID: <b>{employee.Id}</b></label>
+// 			</p>
+// 			<p>
+// 				<label>Employee Name: <b>{employee.Name}</b></label>
+// 			</p>
+// 			<p>
+// 				<label>Employee Salary: <b>{employee.Salary}</b></label>
+// 			</p>
+// 			<p>
+// 				<label>Employee Location: <b>{employee.Location}</b></label>
+// 			</p>
+// 			<employeeContext.Provider value={{data:employee, updateEmployee:setEmployee}}>
+// 				<Employee></Employee>
+// 			</employeeContext.Provider>
+// 		</div>
+// 	)
+// }
+
+
+// function Employee(){
+// 	let context = useContext(employeeContext);
+
+// 	function changeEmploymentType(){
+// 		context.updateEmployee({...context.data, EmploymentType:"Permanent"})
+// 	}
+
+
+// 	return(
+// 		<div>
+// 			<h2>Welcome to Employee Component</h2>
+// 			<p>
+// 				<label>Employee ID: <b>{context.data.Id}</b></label>
+// 			</p>
+// 			<p>
+// 				<label>Employee Name: <b>{context.data.Name}</b></label>
+// 			</p>
+// 			<employeeContext.Consumer>
+// 				{value => value.data.EmploymentType == "Permanent" ? <Permanent></Permanent> : <Contract></Contract>}
+// 			</employeeContext.Consumer>
+// 			<button onClick={changeEmploymentType}>Convert to Permanent</button>
+// 			<Salary></Salary>
+// 		</div>
+// 	)
+// }
+
+
+// function Salary(){
+// 	let context = useContext(employeeContext);
+
+// 	function updateSalary(){
+// 		context.updateEmployee({...context.data, Salary:15000});
+// 	}
+// 	return(
+// 		<div>
+// 			<h2>Welcome to Salary Component</h2>
+// 			<p>
+// 				<label>Employee Salary: <b>{context.data.Salary}</b></label>
+// 			</p>
+// 			<p>
+// 				<label>Employee Location: <b>{context.data.Location}</b></label>
+// 			</p>
+// 			<button onClick={updateSalary}>update salary</button>
+// 		</div>
+// 	)
+// }
+
+
+// function Permanent(){
+// 	return(
+// 		<div>
+// 			<h2>This Employee is Permanent</h2>
+// 		</div>
+// 	)
+// }
+
+
+// function Contract(){
+// 	return(
+// 		<div>
+// 			<h2>This Employee is Contract</h2>
+// 		</div>
+// 	)
+// }
+
+
+// const element = <App></App>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+/***  Custom Hooks in React   Lesson 35 ***/
+
