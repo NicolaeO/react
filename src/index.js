@@ -4,6 +4,13 @@ import './index.css';
 import {useFormik, Formik, ErrorMessage, Field, Form} from 'formik';
 import * as yup from 'yup';
 import video from "../src/assets/Abigail.MOV";
+import {useSpeechRecognition} from 'react-speech-kit';
+import {BrowserRouter, Link, Switch, Route, NavLink} from "react-router-dom";
+import Employee from './employee';
+import Department from './department';
+import Project from './project';
+import InvalidPath from './404';
+import EditEmployee from './editemployee';
 
 
 /*** Creating an element in React ***/
@@ -2630,4 +2637,239 @@ import video from "../src/assets/Abigail.MOV";
 
 
 /***  Custom Hooks in React   Lesson 35 ***/
+// function useList(url){
+// 	const [data, setData] = useState([]);
 
+// 	useEffect(() => {
+// 		fetch(url)
+// 			.then(res=>res.json())
+// 			.then(
+// 				(result) => {
+// 					setData(result);
+// 				}
+// 			);
+// 	});
+
+// 	return data;
+// }
+
+
+// function Employee(){
+// 	const employees = useList(`http://localhost:5000/api/users`);
+
+// 	return (
+// 		<div>
+// 			<h2>Welcome to Employee component</h2>
+// 			<table>
+// 				<thead>
+// 					<tr>
+// 						<th>Id</th>
+// 						<th>Name</th>
+// 						<th>Location</th>
+// 						<th>Salary</th>
+// 					</tr>
+// 				</thead>
+// 				<tbody>
+// 					{employees.map( emp => (
+// 						<tr key={emp.id}>
+// 							<td>{emp.id}</td>
+// 							<td>{emp.name}</td>
+// 							<td>{emp.location}</td>
+// 							<td>{emp.salary}</td>
+// 						</tr>
+// 					))}
+// 				</tbody>
+// 			</table>
+// 		</div>
+// 	);
+// }
+
+
+// function Department(){
+
+// 	const departments = useList(`http://localhost:5000/api/department`);
+
+// 	return(
+// 		<div>
+// 			<h2>Welcome to Department Component</h2>
+// 			<table>
+// 				<thead>
+// 					<tr>
+// 						<th>Id</th>
+// 						<th>Name</th>
+// 						<th>Revenue</th>
+// 					</tr>
+// 				</thead>
+// 				<tbody>
+// 					{departments.map( dept => (
+// 						<tr key={dept.Id}>
+// 							<td>{dept.Id}</td>
+// 							<td>{dept.Name}</td>
+// 							<td>{dept.Revenue}</td>
+// 						</tr>
+// 					))}
+// 				</tbody>
+// 			</table>
+// 		</div>
+// 	);
+// }
+
+
+// function App(){
+// 	return(
+// 		<div>
+// 			<Employee></Employee>
+// 			<Department></Department>
+// 		</div>
+// 	);
+// }
+
+// const element = <App></App>
+// ReactDOM.render(element, document.getElementById('root'));
+
+
+
+/***  Import Custom Hooks from NPM in React  Lesson 36 ***/
+// function App(){
+// 	const [text, setText] = useState('');
+
+// 	const{listen, stop} = useSpeechRecognition({
+// 		onResult: result => setText(result)
+// 	});
+
+// 	return(
+// 		<div>
+// 			<h2>Converting the Speech</h2>
+// 			<textarea value={text}></textarea>
+// 			<p>
+// 				<button onClick={listen}>Listen</button>
+// 				<button onClick={stop}>Stop</button>
+// 			</p>
+// 		</div>
+// 	);
+// }
+
+// const element = <App></App>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+
+/***  Routing in React  Lesson 37 ***/
+// First we created a new components in a new 
+	// employee.js  -> Employee
+	// department.js  -> Department
+	// project.js   -> Project
+
+// function App(){
+// 	return(
+// 		<div>
+// 			<h2>Welcome to App Component</h2>
+// 			<ul>
+// 				<li><Link to="/employees">Employees</Link></li>
+// 				<li><Link to="/departments">Department</Link></li>
+// 				<li><Link to="/projects">Project</Link></li>
+// 			</ul>
+// 			<Route path="/employees" component={Employee}></Route>
+// 			<Route path="/departments" component={Department}></Route>
+// 			<Route path="/project" component={Project}></Route>
+// 		</div>
+// 	)
+// }
+
+// const element = 
+// 	<BrowserRouter>
+// 		<App></App>
+// 	</BrowserRouter>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+
+/***   Switch Component in React Router   Lesson 38 ***/
+// function App(){
+// 	return(
+// 		<div>
+// 			<h2>Welcome to App Component</h2>
+// 			<ul>
+// 				<li><Link to="/">Employees</Link></li>
+// 				<li><Link to="/departments">Department</Link></li>
+// 				<li><Link to="/projects">Project</Link></li>
+// 			</ul>
+// 			<Switch>
+// 				<Route exact path="/" component={Employee}></Route>
+// 				<Route path="/departments" component={Department}></Route>
+// 				<Route path="/project" component={Project}></Route>
+// 			</Switch>
+// 		</div>
+// 	)
+// }
+
+// const element = 
+// 	<BrowserRouter>
+// 		<App></App>
+// 	</BrowserRouter>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+/***  React NavLink Component and Importance of Routes Order   Lesson 39 ***/
+// function App(){
+// 	return(
+// 		<div>
+// 			<h2>Welcome to App Component</h2>
+// 			<ul>
+// 				<li><NavLink to="/">Employees</NavLink></li>
+// 				<li><NavLink to="/departments" activeClassName="activeLinkClass">Department</NavLink></li>
+// 				<li><NavLink to="/projects" activeClassName="activeLinkClass">Project</NavLink></li>
+// 			</ul>
+// 			<Switch>
+// 				<Route exact path="/" component={Employee}></Route>
+// 				<Route path="/departments" component={Department}></Route>
+// 				<Route path="/project" component={Project}></Route>
+// 				<Route component={InvalidPath}></Route>
+// 			</Switch>
+// 		</div>
+// 	)
+// }
+
+// const element = 
+// 	<BrowserRouter>
+// 		<App></App>
+// 	</BrowserRouter>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+
+/***  React URL Parameters   Lesson 40 ***/
+// function App(){
+// 	return(
+// 		<div>
+// 			<h2>Welcome to App Component</h2>
+// 			<ul>
+// 				<li><NavLink to="/">Employees</NavLink></li>
+// 				<li><NavLink to="/departments" activeClassName="activeLinkClass">Department</NavLink></li>
+// 				<li><NavLink to="/projects" activeClassName="activeLinkClass">Project</NavLink></li>
+// 			</ul>
+// 			<Switch>
+// 				<Route exact path="/" component={Employee}></Route>
+// 				<Route path="/employee/:id" component={EditEmployee}></Route>
+// 				<Route path="/departments" component={Department}></Route>
+// 				<Route path="/project" component={Project}></Route>
+// 				<Route component={InvalidPath}></Route>
+// 			</Switch>
+// 		</div>
+// 	)
+// }
+
+// const element = 
+// 	<BrowserRouter>
+// 		<App></App>
+// 	</BrowserRouter>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+
+/***   Nesting Routes in React   Lesson 41 ***/
