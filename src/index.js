@@ -11,6 +11,7 @@ import Department from './department';
 import Project from './project';
 import InvalidPath from './404';
 import EditEmployee from './editemployee';
+import EditEmployee_SubRoute from './editemployee_sub_route';
 
 
 /*** Creating an element in React ***/
@@ -2873,3 +2874,115 @@ import EditEmployee from './editemployee';
 
 
 /***   Nesting Routes in React   Lesson 41 ***/
+// Using codes from editemployee_sub_route 
+// function App(){
+// 	return(
+// 		<div>
+// 			<h2>Welcome to App Component</h2>
+// 			<ul>
+// 				<li><NavLink to="/">Employees</NavLink></li>
+// 				<li><NavLink to="/departments" activeClassName="activeLinkClass">Department</NavLink></li>
+// 				<li><NavLink to="/projects" activeClassName="activeLinkClass">Project</NavLink></li>
+// 			</ul>
+// 			<Switch>
+// 				<Route exact path="/" component={Employee}></Route>
+// 				<Route path="/employee/:id" component={EditEmployee_SubRoute}></Route>
+// 				<Route path="/departments" component={Department}></Route>
+// 				<Route path="/project" component={Project}></Route>
+// 				<Route component={InvalidPath}></Route>
+// 			</Switch>
+// 		</div>
+// 	)
+// }
+
+// const element = 
+// 	<BrowserRouter>
+// 		<App></App>
+// 	</BrowserRouter>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+
+/***  Programmatic navigation of routes in React   Lesson 42 ***/
+// function LogIn(props){
+// 	const [loginData, setLoginData] = useState({username:"", password:""});
+
+// 	function changeLogInData(e){
+// 		setLoginData({...loginData, [e.target.name]: e.target.value});
+// 	}
+
+// 	function onLogIn(){
+// 		fetch("http://192.168.0.12:8000/api/login",{
+// 			method: "POST",
+// 			headers: {"Content-type": "application/json"},
+// 			body: JSON.stringify(loginData)
+// 		}).then(r => r.json()).then(result => {
+// 			if(result) {
+// 				props.history.push('/home');
+// 			}
+// 			else{
+// 				alert("Invalid Username and/or Password")
+// 			}
+// 		});
+// 	}
+
+// 	return(
+// 		<div>
+// 			<h2>Welcome to LogIn...</h2>
+// 			<p>
+// 				<label>User Name:</label>
+// 				<input type="text" value={loginData.username} name="username" onChange={changeLogInData}></input>
+// 			</p>
+// 			<p>
+// 				<label>Password:</label>
+// 				<input type="password" value={loginData.password} name="password" onChange={changeLogInData}></input>
+// 			</p>
+// 			<button onClick={onLogIn}>Log In</button>
+// 		</div>
+// 	)
+// }
+
+
+// function Home(){
+// 	return(
+// 		<div>
+// 			<h2>Welcome to Home component</h2>
+// 		</div>
+// 	);
+// }
+
+// function EditProfile(){
+// 	return(
+// 		<div>
+// 			<h2>Welcome to Edit Profile...</h2>
+// 		</div>
+// 	);
+// }
+
+
+// function App(){
+// 	return(
+// 		<div>
+// 			<h2>Welcome to App Component</h2>
+// 			<Link to="/">LogIn</Link>
+// 			<NavLink to="/Home" activeClassName="activeLinkClass">Home</NavLink>
+// 			<NavLink to="/EditProfile" activeClassName="activeLinkClass">Edit Profile</NavLink>
+
+// 			<Switch>
+// 				<Route exact path="/" component={LogIn}></Route>
+// 				<Route exact path="/Home" component={Home}></Route>
+// 				<Route exact path="/EditProfile" component={EditProfile}></Route>
+// 			</Switch>
+// 		</div>
+// 	);
+// }
+
+
+// const element = <BrowserRouter><App></App></BrowserRouter>
+// ReactDOM.render(element, document.getElementById("root"));
+
+
+
+
+/***  Protected Routes in React  Lesson 43 ***/
